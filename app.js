@@ -2,11 +2,16 @@
 
 let express = require('express');
 let mongoose = require('mongoose');
+let bodyParser = require('body-parser');
 
 
 //inicializar varibles
 
 let app = express();
+
+//bosy bodyParser
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 
 //conexion a la DB
 mongoose.connection.openUri('mongodb://localhost:27017/ProductosDB' , (err, res) =>{
@@ -19,10 +24,17 @@ mongoose.connection.openUri('mongodb://localhost:27017/ProductosDB' , (err, res)
 
 //importar rutas
 
-app.get
+var appRoutes = require('./routes/app.js');
+var usuarioRoutes = require('./routes/usuario.js');
+var categoriaRoutes = require('./routes/categoria.js');
+var productoRoutes = require('./routes/producto.js');
 
 
-//rutas
+//rutas declaramos el middleware
+app.use('/producto', productoRoutes);
+app.use('/categoria', categoriaRoutes);
+app.use('/usuario', usuarioRoutes);
+app.use('/', appRoutes);
 
 
 //excuchar peticiones
