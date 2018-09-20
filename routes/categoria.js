@@ -11,6 +11,7 @@ var Categoria = require('../modelos/categoria.js');
 app.get('/', (req, res , next) => {
 
     Categoria.find({}, 'nombre descripcion')
+      .populate('usuario', 'nombre email')
       .exec(
         (err, categorias) => {
             if (err) {

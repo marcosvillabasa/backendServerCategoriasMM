@@ -11,6 +11,8 @@ var Producto = require('../modelos/producto.js');
 app.get('/', (req, res , next) => {
 
     Producto.find({}, 'nombre descripcion usuario categoria')
+      .populate('usuario', 'nombre email')
+      .populate('categoria','nombre')
       .exec(
         (err, productos) => {
             if (err) {
